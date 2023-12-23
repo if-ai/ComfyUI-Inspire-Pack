@@ -275,21 +275,10 @@ class DWPreprocessor_Provider_for_SEGS:
                 "detect_body": ("BOOLEAN", {"default": True, "label_on": "enable", "label_off": "disable"}),
                 "detect_face": ("BOOLEAN", {"default": True, "label_on": "enable", "label_off": "disable"}),
                 "resolution_upscale_by": ("FLOAT", {"default": 1.0, "min": 0.5, "max": 100, "step": 0.1}),
-                "pose_estimator": (
-                    "SELECT", 
-                    {
-                        "options": [
-                            "dw-ll_ucoco_384_bs5.torchscript.pt", 
-                            "dw-ll_ucoco_384.onnx", 
-                            "dw-ll_ucoco.onnx", 
-                            "dw-mm_ucoco.onnx", 
-                            "dw-ss_ucoco.onnx"
-                        ], 
-                        "default": "dw-ll_ucoco_384.onnx"
-                    }
-                )
+                "pose_estimator": (["dw-ll_ucoco_384_bs5.torchscript.pt", "dw-ll_ucoco_384.onnx", "dw-ll_ucoco.onnx", "dw-mm_ucoco.onnx", "dw-ss_ucoco.onnx"], {"default": "dw-ll_ucoco_384.onnx"})
             }
         }
+
     RETURN_TYPES = ("SEGS_PREPROCESSOR",)
     FUNCTION = "doit"
 
@@ -298,6 +287,7 @@ class DWPreprocessor_Provider_for_SEGS:
     def doit(self, detect_hand, detect_body, detect_face, resolution_upscale_by, pose_estimator):
         obj = DWPreprocessor_wrapper(detect_hand, detect_body, detect_face, upscale_factor=resolution_upscale_by, pose_estimator=pose_estimator)
         return (obj, )
+
 
 
 class LeReS_DepthMap_Preprocessor_Provider_for_SEGS:
