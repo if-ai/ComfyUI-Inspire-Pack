@@ -156,7 +156,7 @@ class OpenPose_Preprocessor_wrapper:
 
 
 class DWPreprocessor_wrapper:
-    def __init__(self, detect_hand, detect_body, detect_face, upscale_factor=1.0, bbox_detector="yolox_l.onnx", pose_estimator="dw-ll_ucoco_384.onnx"):
+    def __init__(self, detect_hand, detect_body, detect_face, upscale_factor=1.0, pose_estimator="dw-ll_ucoco_384.onnx"):
         self.detect_hand = detect_hand
         self.detect_body = detect_body
         self.detect_face = detect_face
@@ -275,7 +275,19 @@ class DWPreprocessor_Provider_for_SEGS:
                 "detect_body": ("BOOLEAN", {"default": True, "label_on": "enable", "label_off": "disable"}),
                 "detect_face": ("BOOLEAN", {"default": True, "label_on": "enable", "label_off": "disable"}),
                 "resolution_upscale_by": ("FLOAT", {"default": 1.0, "min": 0.5, "max": 100, "step": 0.1}),
-                "pose_estimator": ("SELECT", {"options": ["dw-ll_ucoco_384_bs5.torchscript.pt", "dw-ll_ucoco_384.onnx", "dw-ll_ucoco.onnx", "dw-mm_ucoco.onnx", "dw-ss_ucoco.onnx"], "default": "dw-ll_ucoco_384.onnx"})
+                "pose_estimator": (
+                    "SELECT", 
+                    {
+                        "options": [
+                            "dw-ll_ucoco_384_bs5.torchscript.pt", 
+                            "dw-ll_ucoco_384.onnx", 
+                            "dw-ll_ucoco.onnx", 
+                            "dw-mm_ucoco.onnx", 
+                            "dw-ss_ucoco.onnx"
+                        ], 
+                        "default": "dw-ll_ucoco_384.onnx"
+                    }
+                )
             }
         }
     RETURN_TYPES = ("SEGS_PREPROCESSOR",)
