@@ -164,8 +164,8 @@ class DWPreprocessor_wrapper:
         self.pose_estimator = pose_estimator
 
     def apply(self, image, mask=None):
-        if 'DWPose_Preprocessor' not in nodes.NODE_CLASS_MAPPINGS:
-            raise Exception(f"[ERROR] To use DWPose_Preprocessor, you need to install 'ComfyUI's ControlNet Auxiliary Preprocessors.'")
+        if 'DWPreprocessor' not in nodes.NODE_CLASS_MAPPINGS:
+            raise Exception(f"[ERROR] To use DWPreprocessor, you need to install 'ComfyUI's ControlNet Auxiliary Preprocessors.'")
 
         detect_hand = 'enable' if self.detect_hand else 'disable'
         detect_body = 'enable' if self.detect_body else 'disable'
@@ -174,7 +174,7 @@ class DWPreprocessor_wrapper:
         if self.upscale_factor != 1.0:
             image = nodes.ImageScaleBy().upscale(image, 'bilinear', self.upscale_factor)[0]
 
-        obj = nodes.NODE_CLASS_MAPPINGS['DWPose_Preprocessor']()
+        obj = nodes.NODE_CLASS_MAPPINGS['DWPreprocessor']()
         resolution = normalize_size_base_64(image.shape[2], image.shape[1])
         return obj.estimate_pose(image, detect_hand, detect_body, detect_face, resolution=resolution, pose_estimator=self.pose_estimator)['result'][0]
 
