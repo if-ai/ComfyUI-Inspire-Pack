@@ -295,7 +295,7 @@ class DWPreprocessor_Provider_for_SEGS:
 
     CATEGORY = "InspirePack/SEGS/ControlNet"
 
-    def doit(self, detect_hand, detect_body, detect_face, resolution_upscale_by, pose_estimator="dw-ll_ucoco_384.onnx"):
+    def doit(self, detect_hand, detect_body, detect_face, resolution_upscale_by, pose_estimator):
         obj = DWPreprocessor_wrapper(detect_hand, detect_body, detect_face, upscale_factor=resolution_upscale_by, pose_estimator=pose_estimator)
         return (obj, )
 
